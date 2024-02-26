@@ -68,7 +68,7 @@ async function cancelOrders()
 	
         console.log('Cancel open orders');
 }
-cancelOrders();
+await cancelOrders();
 console.log('end first del');
 
 var is_initialised = false;
@@ -112,8 +112,8 @@ async function runIt()
 	orders = await restapi.getUserOrders(opts.stock + '/' + opts.base, 0, 1000);
 	console.log(orders.length)
 	if (orders.length !== opts.numorders * 2) {
-		cancelOrders();
-		init_grid();
+		await cancelOrders();
+		await init_grid();
 	}
 
 	setTimeout(function() {
