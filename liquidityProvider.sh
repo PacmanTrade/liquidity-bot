@@ -4,6 +4,9 @@
 
 base=
 stock=
+numorders=
+delta=
+quantity=
 
 count=0
 for i in "$@"; do

@@ -17,8 +17,8 @@ const opts = {
     base: argv.base,                	/// Base asset to use e.g. BTC for BTC_ETH
     stock: argv.stock,               	/// Stock to use e.g. ETH for BTC_ETH
     numorders: parseInt(argv.numorders),	/// Number of orders per side
-	delta: argv.delta,
-	quantity: argv.quantity
+	delta: parseFloat(argv.delta),
+	quantity: parseInt(argv.quantity)
 }
 
 // Get the command line args and save into opts
