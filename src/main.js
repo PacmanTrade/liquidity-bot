@@ -120,7 +120,7 @@ async function runIt()
 	
 		runIt();
 	
-	},10000);
+	},5000);
 
 
 }
@@ -132,19 +132,19 @@ async function runIt()
 async function init_grid() {
 	console.log('init_grid');
 
-	var marketInfo = await restapi.getOrderBookBySymbol(opts.stock + '/' + opts.base);
-	var bestbid = marketInfo.bid.items[0].price;
-	var bestask = marketInfo.ask.items[0].price;
+	var lasttrade = await restapi.getTradeHistorySince(opts.stock + '/' + opts.base, 1);
+	var last_price = parseFloat(lasttrade[0].price);
+
 
 	for (var i = 0; i < opts.numorders; i++) {
 		try {
-			var buyorderinfo = await restapi.createLimitOrder(opts.stock + '/' +  opts.base, bestbid - (i + 1) * opts.delta, opts.quantity, 'BUY', 'LIMIT_PRICE', 0);
+			var buyorderinfo = await restapi.createLimitOrder(opts.stock + '/' +  opts.base, last_price - (i + 1) * opts.delta, opts.quantity, 'BUY', 'LIMIT_PRICE', 0);
 			console.log(buyorderinfo);
 		} catch (e) {
 			console.log(e);
 		}
 		try {
-			var sellorderinfo = await restapi.createLimitOrder(opts.stock + '/' +  opts.base, bestask + (i + 1) * opts.delta, opts.quantity, 'SELL', 'LIMIT_PRICE', 0);
+			var sellorderinfo = await restapi.createLimitOrder(opts.stock + '/' +  opts.base, last_price + (i + 1) * opts.delta, opts.quantity, 'SELL', 'LIMIT_PRICE', 0);
 			console.log(sellorderinfo);
 		} catch (e) {
 			console.log(e);
